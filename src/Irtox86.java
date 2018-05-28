@@ -68,7 +68,7 @@ public class Irtox86
             if (i != params.size() - 1)
             {
                 System.out.print("      ");
-                System.out.println("mov\t" + reg + "[" + reg + "]");
+                System.out.println("mov\t" + reg + ",[" + reg + "]");
             }
         }
     }
