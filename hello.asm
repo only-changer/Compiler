@@ -724,68 +724,80 @@ section   .text
 main:
       push	rbp
       mov	rbp,rsp
-      sub	rsp,136
+      sub	rsp,96
       mov	qword[rbp - 8],5
-      mov	qword[rbp - 16],0
-      mov	r10,[rbp - 16]
-      cmp	r10,0
-      setne r10b
-      movzx r10,r10b
-      mov	[rbp - 40],r10
+      mov	r10,[rbp - 8]
+      add	r10,1
+      mov	[rbp - 24],r10
+      mov	r10,[rbp - 24]
+      imul	r10,8
+      mov	[rbp - 24],r10
+      mov	rdi,[rbp-24]
+      push	r10
+      push	r11
+      call	malloc
+      pop	r10
+      pop	r11
+      mov	[rbp -  32],rax
+      mov	r10,[rbp - 32]
+      mov	[rbp - 16],r10
+      mov	qword[rbp - 40],0
+      mov	qword[rbp - 48],0
+_0for:
       mov	r10,[rbp - 48]
-      cmp	r10,1
-      setne r10b
+      add	r10,1
+      mov	[rbp - 72],r10
+      mov	r10,[rbp - 72]
+      imul	r10,8
+      mov	[rbp - 72],r10
+      mov	r10,[rbp - 40]
+      add	r10,1
+      mov	[rbp - 40],r10
+      mov	r10,[rbp - 40]
+      mov	r11,[rbp - 16]
+      add	r11,[rbp - 72]
+      mov	[r11],r10
+      mov	r10,[rbp - 48]
+      add	r10,1
+      mov	[rbp - 48],r10
+      mov	r10,[rbp - 48]
+      cmp	r10,[rbp - 8]
+      setl r10b
       movzx r10,r10b
       mov	[rbp - 56],r10
-      mov	r10,[rbp - 40]
-      and	r10,[rbp - 56]
-      mov	[rbp - 64],r10
-      mov	r10,[rbp - 64]
-      mov	[rbp - 32],r10
-      mov	 r10,[rbp-32]
-      cmp	 r10,0
-      je	_0else
-_0if:
-      mov	qword[rbp - 24],10
-      jmp	_0ifback
-_0else:
-      mov	qword[rbp - 24],20
-_0ifback:
-      mov	r10,[rbp - 24]
-      cmp	r10,10
-      sete r10b
-      movzx r10,r10b
+      mov	r10,[rbp -  56]
+      cmp	r10,1
+      je	_0for
+_0forback:
+      mov	qword[rbp - 56],0
+      mov	qword[rbp - 48],0
+_1for:
+      mov	r10,[rbp - 48]
+      add	r10,1
       mov	[rbp - 80],r10
-      mov	r10,[rbp - 88]
-      cmp	r10,0
-      sete r10b
-      movzx r10,r10b
-      mov	[rbp - 96],r10
       mov	r10,[rbp - 80]
-      and	r10,[rbp - 96]
-      mov	[rbp - 104],r10
-      mov	r10,[rbp - 8]
-      cmp	r10,5
-      sete r10b
+      imul	r10,8
+      mov	[rbp - 80],r10
+      mov	r10,[rbp - 56]
+      mov	r11,[rbp - 16]
+      add	r11,[rbp - 80]
+      add	r10,[r11]
+      mov	[rbp - 88],r10
+      mov	r10,[rbp - 88]
+      mov	[rbp - 56],r10
+      mov	r10,[rbp - 48]
+      add	r10,1
+      mov	[rbp - 48],r10
+      mov	r10,[rbp - 48]
+      cmp	r10,[rbp - 8]
+      setl r10b
       movzx r10,r10b
-      mov	[rbp - 112],r10
-      mov	r10,[rbp - 104]
-      and	r10,[rbp - 112]
-      mov	[rbp - 120],r10
-      mov	r10,[rbp -  120]
-      xor	r10,1
-      mov	[rbp-128],r10
-      mov	r10,[rbp - 128]
-      mov	[rbp - 72],r10
-      mov	 r10,[rbp-72]
-      cmp	 r10,0
-      je	_1else
-_1if:
-      mov	qword[rbp - 24],30
-      jmp	_1ifback
-_1else:
-_1ifback:
-      mov	rdi,[rbp -  24]
+      mov	[rbp - 64],r10
+      mov	r10,[rbp -  64]
+      cmp	r10,1
+      je	_1for
+_1forback:
+      mov	rdi,[rbp -  56]
       mov	rax,60
       syscall
 section .data
